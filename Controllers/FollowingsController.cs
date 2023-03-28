@@ -23,13 +23,13 @@ namespace BigSchool_Nghia.Controllers
         {
             var userId =User.Identity.GetUserId();
             if (_Context.Followings.Any(f => f.FollowerId == userId && f.FolloweeId == followingDto.FolloweeId))
-            {
+            
                 return BadRequest("Following already exists");
-            }
+            
             var folowing = new Following
             {
-                FollowerId = userId,
-                FolloweeId = followingDto.FolloweeId
+                FollowerId = followingDto.FolloweeId,
+                FolloweeId = userId
             };
             _Context.Followings.Add(folowing);
             _Context.SaveChanges();

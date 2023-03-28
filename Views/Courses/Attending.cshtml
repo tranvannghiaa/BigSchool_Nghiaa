@@ -1,0 +1,37 @@
+﻿@model BigSchool_Nghia.ViewModels.CoursesViewModel
+@{
+    ViewBag.Title = "Attending";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<h1>Attending</h1>
+<ul class="course">
+    @foreach (var course in Model.UpcommingCourses)
+    {
+        <li>
+            <div class="date">
+                <div class="month">
+                    @course.DateTime.ToString("MM")
+                </div>
+                <div class="day">
+                    @course.DateTime.ToString("dd")
+                </div>
+
+            </div>
+            <div class="details">
+                <span class="lecturer">
+                    @course.Lecturer.Name
+                    @if (Model.ShowAction)
+                    {
+                        <button class="btn btn-default btn-sm js-toggle-follow" data-user-id="@course.LecturerId">Follow</button>}
+
+                </span>
+                <span class="category">
+                    @course.Category.Name
+                </span>
+                @if (Model.ShowAction)
+                {
+                    <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendence">Going?</button>}
+            </div>
+        </li>
+    }
+</ul>

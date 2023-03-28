@@ -1,4 +1,5 @@
-﻿using BigSchool_Nghia.Models;
+﻿using BigSchool_Nghia.DTOs;
+using BigSchool_Nghia.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace BigSchool_Nghia.Controllers
 
         }
         [HttpPost]
-        public IHttpActionResult Attend(Attendance attendanceDto)
+        public IHttpActionResult Attend(AttendanceDto attendanceDto)
         {
             var userId = User.Identity.GetUserId();
             if (_context.Attendances.Any(a => a.AttendeeId == userId && a.CourseId == attendanceDto.CourseId))

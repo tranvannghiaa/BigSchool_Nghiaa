@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using BigSchool_Nghia.Models;
-
+using BigSchool_Nghia.ViewModels;
 
 namespace BigSchool_TranVanNghia.Controllers
 {
@@ -22,7 +22,12 @@ namespace BigSchool_TranVanNghia.Controllers
             var upcommingCourses = _context.Courses
                 .Include(c => c.Lecturer)
                 .Include(c => c.Category).Where(c => c.DateTime > DateTime.Now);
-            return View(upcommingCourses);
+            var viewModel = new CoursesViewModel
+            {
+                UpcommingCourses = upcommingCourses,
+                ShowAction = User.Identity.IsAuthenticated
+            };
+            return View(viewModel);
         }
 
         public ActionResult About()
