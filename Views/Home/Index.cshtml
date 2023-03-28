@@ -1,0 +1,54 @@
+﻿@model IEnumerable<BigSchool_Nghia.Models.Course>
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="row">
+    <ul class="course">
+        @foreach (var course in Model)
+        {
+            <li>
+                <div class="date">
+                    <div class="month">
+                        @course.DateTime.ToString("MM")
+                    </div>
+                    <div class="day">
+                        @course.DateTime.ToString("dd")
+                    </div>
+                </div>
+                <div class="details" style=" display: grid;">
+                    <span class="lecture">
+                        @course.Lecturer.Name
+                    </span>
+                    <span class="category">
+                        @course.Category.Name
+                    </span>
+                    <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendence">Going?</button>
+                </div>
+            </li>
+        }
+    </ul>
+    @section scripts
+    {
+        <script>
+        $(document.ready(function () {
+            $(".js-toggle-attendence").click(function (e)){
+                var button = $(e.target);
+                $.post("/api/attendences", { courseId: button.attr("data-course-id") })
+                    .done(function () {
+                        button
+                            .removeClass("btn-default")
+                            .addClass("btn-info")
+                            .text("Going");
+                    })
+                    .fail(function () {
+                        alert("Something failed!");
+                    });
+
+
+            });
+        });
+        </script>
+
+    }
+</div>
